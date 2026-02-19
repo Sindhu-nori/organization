@@ -225,10 +225,10 @@ public class BeneficiaryImpl implements BeneficiaryIface {
 			return AppUtil.createApiResponse(true, "Beneficiary Created Successfully", benificiariesResponseDto);
 		} catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException
 				| PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong please try after sometime", null);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong. Please contact admin", null);
 		}
 	}
@@ -241,10 +241,10 @@ public class BeneficiaryImpl implements BeneficiaryIface {
 			return AppUtil.createApiResponse(true, "privileges fetched successfully", beneficiariedPrivilegeServices);
 		} catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException
 				| PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong please try after sometime", null);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong. Please contact admin", null);
 		}
 	}
@@ -256,10 +256,10 @@ public class BeneficiaryImpl implements BeneficiaryIface {
 					beneficiariesRepo.findAll());
 		} catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException
 				| PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong please try after sometime", null);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong. Please contact admin", null);
 		}
 	}
@@ -272,10 +272,10 @@ public class BeneficiaryImpl implements BeneficiaryIface {
 
 		} catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException
 				| PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong please try after sometime", null);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong. Please contact admin", null);
 		}
 	}
@@ -362,10 +362,10 @@ public class BeneficiaryImpl implements BeneficiaryIface {
 			return AppUtil.createApiResponse(true, "Fetched record successfully", benificiariesDto);
 		} catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException
 				| PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong please try after sometime", null);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong. Please contact admin", null);
 		}
 	}
@@ -515,10 +515,10 @@ public class BeneficiaryImpl implements BeneficiaryIface {
 //			return AppUtil.createApiResponse(true, "Beneficiary Updated Successfully", benificiariesResponseDto);
 //		} catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException
 //				| PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException ex) {
-//			ex.printStackTrace();
+//			logger.error("Unexpected exception", ex);
 //			return AppUtil.createApiResponse(false, "Something went wrong please try after sometime", null);
 //		} catch (Exception ex) {
-//			ex.printStackTrace();
+//			logger.error("Unexpected exception", ex);
 //			return AppUtil.createApiResponse(false, "Something went wrong. Please contact admin", null);
 //		}
 //	}
@@ -692,10 +692,10 @@ public class BeneficiaryImpl implements BeneficiaryIface {
 			return AppUtil.createApiResponse(true, "Beneficiary Updated Successfully", benificiariesResponseDto);
 		} catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException
 				 | PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong please try after sometime", null);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong. Please contact admin", null);
 		}
 	}
@@ -708,10 +708,10 @@ public class BeneficiaryImpl implements BeneficiaryIface {
 
 		} catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException
 				| PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong please try after sometime", null);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong. Please contact admin", null);
 		}
 	}
@@ -848,10 +848,10 @@ public class BeneficiaryImpl implements BeneficiaryIface {
 //
 //		} catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException
 //				| PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException ex) {
-//			ex.printStackTrace();
+//			logger.error("Unexpected exception", ex);
 //			return AppUtil.createApiResponse(false, "Something went wrong please try after sometime", null);
 //		} catch (Exception ex) {
-//			ex.printStackTrace();
+//			logger.error("Unexpected exception", ex);
 //			return AppUtil.createApiResponse(false, "Something went wrong. Please contact admin", null);
 //		}
 //
@@ -1032,10 +1032,10 @@ public class BeneficiaryImpl implements BeneficiaryIface {
 
 		} catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException
 				 | PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong please try after sometime", null);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong. Please contact admin", null);
 		}
 
@@ -1072,10 +1072,10 @@ public class BeneficiaryImpl implements BeneficiaryIface {
 
 		} catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException
 				| PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong please try after sometime", null);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong. Please contact admin", null);
 		}
 	}
@@ -1128,10 +1128,10 @@ public class BeneficiaryImpl implements BeneficiaryIface {
 //
 //		} catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException
 //				| PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException ex) {
-//			ex.printStackTrace();
+//			logger.error("Unexpected exception", ex);
 //			return AppUtil.createApiResponse(false, "Something went wrong please try after sometime", null);
 //		} catch (Exception ex) {
-//			ex.printStackTrace();
+//			logger.error("Unexpected exception", ex);
 //			return AppUtil.createApiResponse(false, "Something went wrong. Please contact admin", null);
 //		}
 //
@@ -1227,10 +1227,10 @@ public class BeneficiaryImpl implements BeneficiaryIface {
 
 		} catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException
 				 | PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong please try after sometime", null);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong. Please contact admin", null);
 		}
 
@@ -1245,10 +1245,10 @@ public class BeneficiaryImpl implements BeneficiaryIface {
 
 		}catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException
 				| PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong please try after sometime", null);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong. Please contact admin", null);
 		}
 	}
@@ -1410,10 +1410,10 @@ public class BeneficiaryImpl implements BeneficiaryIface {
 
 		} catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException
 				 | PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong please try after sometime", null);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong. Please contact admin", null);
 
 		}
@@ -1433,10 +1433,10 @@ public class BeneficiaryImpl implements BeneficiaryIface {
 
 		}catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException
 				| PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong please try after sometime", null);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong. Please contact admin", null);
 
 		}
@@ -1478,7 +1478,7 @@ public class BeneficiaryImpl implements BeneficiaryIface {
 			}
 		} catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException
 				| PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException ex) {
-			ex.printStackTrace();
+			logger.error("Unexpected exception", ex);
 			return AppUtil.createApiResponse(false, "Something went wrong please try after sometime", null);
 		} catch (Exception e) {
 			logger.error("Unexpected exception", e);

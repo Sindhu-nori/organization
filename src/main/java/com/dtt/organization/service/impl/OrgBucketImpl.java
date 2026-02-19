@@ -202,10 +202,10 @@ public class OrgBucketImpl implements OrgBucketsIface {
 
         } catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException
                 | PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException ex) {
-            ex.printStackTrace();
+            logger.error("Unexpected exception", ex);
             return AppUtil.createApiResponse(false, "Database Exception Occurred", null);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Unexpected exception", ex);
             return AppUtil.createApiResponse(false, "An Exception occurred", null);
         }
     }
@@ -291,10 +291,10 @@ public class OrgBucketImpl implements OrgBucketsIface {
             }
         }catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException
                 | PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException ex) {
-            ex.printStackTrace();
+            logger.error("Unexpected exception", ex);
             return AppUtil.createApiResponse(false, "Database Exception Occurred", null);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Unexpected exception", ex);
             return AppUtil.createApiResponse(false, "An Exception occurred", null);
         }
     }
@@ -329,10 +329,10 @@ public class OrgBucketImpl implements OrgBucketsIface {
             return AppUtil.createApiResponse(true, "Record saved successfully", null);
         }catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException
                 | PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException ex) {
-            ex.printStackTrace();
+            logger.error("Unexpected exception", ex);
             return AppUtil.createApiResponse(false, "Database Exception Occurred", null);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Unexpected exception", ex);
             return AppUtil.createApiResponse(false, "An Exception occurred", null);
         }
     }
@@ -360,10 +360,10 @@ public class OrgBucketImpl implements OrgBucketsIface {
 
         }catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException
                 | PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException ex) {
-            ex.printStackTrace();
+            logger.error("Unexpected exception", ex);
             return AppUtil.createApiResponse(false, "Database Exception Occurred", null);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Unexpected exception", ex);
             return AppUtil.createApiResponse(false, "An Exception occurred", null);
         }
 
