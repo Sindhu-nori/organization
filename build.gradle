@@ -121,6 +121,9 @@ dependencies {
 
 	runtimeOnly 'org.postgresql:postgresql'
 
+	implementation 'org.springframework.cloud:spring-cloud-starter-vault-config'
+	implementation 'org.springframework.vault:spring-vault-core'
+
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
 
 	implementation 'org.apache.httpcomponents.client5:httpclient5'
@@ -139,3 +142,11 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+ext {
+		springCloudVersion = "2024.0.0" // or the latest 2024.0.x SR release
+	}
+	dependencyManagement {
+		imports {
+			mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+		}
+	}
