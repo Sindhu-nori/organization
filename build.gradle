@@ -1,85 +1,151 @@
-plugins {
+//	plugins {
+//
+//		id 'org.springframework.boot' version '3.5.10'
+//		id 'io.spring.dependency-management' version '1.1.7'
+//		id 'java'
+//
+//	}
+//
+//	group = 'com.dtt'
+//	version = '0.0.1-SNAPSHOT'
+//
+//	//java {
+//		//sourceCompatibility = JavaVersion.VERSION_21
+//		//targetCompatibility = JavaVersion.VERSION_21
+//	//}
+//	java {
+//		toolchain {
+//			languageVersion = JavaLanguageVersion.of(21)
+//		}
+//	}
+//	repositories {
+//		mavenCentral()
+//	}
+//	dependencies {
+//
+//		implementation files('DAESLogIntegrity.jar')
+//
+//		implementation 'commons-fileupload:commons-fileupload:1.6.0'
+//		implementation 'io.sentry:sentry:7.14.0'
+//
+//		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//
+//		implementation('org.springframework.boot:spring-boot-starter-web') {
+//			exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+//		}
+//
+//		implementation 'org.springframework.boot:spring-boot-starter-undertow'
+//
+//		implementation 'org.springframework.kafka:spring-kafka'
+//		implementation 'org.postgresql:postgresql:42.7.3'
+//
+//		implementation 'commons-io:commons-io:2.15.1'
+//
+//		// ✅ Keep only HttpClient 5
+//		implementation 'org.apache.httpcomponents.client5:httpclient5:5.3.1'
+//
+//		implementation 'org.apache.logging.log4j:log4j-core:2.25.3'
+//
+//		implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+//
+//		// ✅ Fix CVE
+//		implementation 'org.apache.commons:commons-lang3:3.18.0'
+//
+//	}
+//	configurations.all {
+//		resolutionStrategy {
+//			force 'org.apache.commons:commons-lang3:3.18.0'
+//		}
+//	}
+//
+//
+//	//tasks.named('test') {
+//		//useJUnitPlatform()
+//	//}
+//	ext {
+//		springCloudVersion = "2024.0.0" // or the latest 2024.0.x SR release
+//	}
+//	dependencyManagement {
+//		imports {
+//			mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+//		}
+//	}
+//	//configurations.all {
+//	//	exclude group: 'commons-logging', module: 'commons-logging'
+//	//}
+//
+//	//graalvmNative {
+//	//	binaries {
+//	//		main {
+//	//			// Use single quotes (' ') to treat $ and | as normal text
+//	//			buildArgs.add('-H:IncludeResources=.*dllConfig_64\\.conf$|.*\\.so$')
+//	//		}
+//	//	}
+//	//}
+//
 
+
+plugins {
 	id 'org.springframework.boot' version '3.5.10'
 	id 'io.spring.dependency-management' version '1.1.7'
 	id 'java'
-
 }
 
 group = 'com.dtt'
 version = '0.0.1-SNAPSHOT'
 
-//java {
-	//sourceCompatibility = JavaVersion.VERSION_21
-	//targetCompatibility = JavaVersion.VERSION_21
-//}
 java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
 }
+
 repositories {
 	mavenCentral()
 }
-dependencies {
 
-	implementation files('DAESLogIntegrity.jar')
-
-	implementation 'commons-fileupload:commons-fileupload:1.6.0'
-	implementation 'io.sentry:sentry:7.14.0'
-
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
-	implementation('org.springframework.boot:spring-boot-starter-web') {
-		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
-	}
-
-	implementation 'org.springframework.boot:spring-boot-starter-undertow'
-
-	implementation 'org.springframework.kafka:spring-kafka'
-	implementation 'org.postgresql:postgresql:42.7.3'
-
-	implementation 'commons-io:commons-io:2.15.1'
-
-	// ✅ Keep only HttpClient 5
-	implementation 'org.apache.httpcomponents.client5:httpclient5:5.3.1'
-
-	implementation 'org.apache.logging.log4j:log4j-core:2.25.3'
-
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
-
-	// ✅ Fix CVE
-	implementation 'org.apache.commons:commons-lang3:3.18.0'
-
-}
-configurations.all {
-	resolutionStrategy {
-		force 'org.apache.commons:commons-lang3:3.18.0'
-	}
-}
-
-
-//tasks.named('test') {
-	//useJUnitPlatform()
-//}
 ext {
-	springCloudVersion = "2024.0.0" // or the latest 2024.0.x SR release
+	springCloudVersion = "2024.0.1"   // Use latest stable
 }
+
 dependencyManagement {
 	imports {
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
 	}
 }
-//configurations.all {
-//	exclude group: 'commons-logging', module: 'commons-logging'
-//}
 
-//graalvmNative {
-//	binaries {
-//		main {
-//			// Use single quotes (' ') to treat $ and | as normal text
-//			buildArgs.add('-H:IncludeResources=.*dllConfig_64\\.conf$|.*\\.so$')
-//		}
-//	}
-//}
+dependencies {
 
+	// ===== Spring Boot Starters =====
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-undertow'
+	implementation 'org.springframework.kafka:spring-kafka'
+
+	// ===== Database =====
+	runtimeOnly 'org.postgresql:postgresql'
+
+	// ===== OpenAPI =====
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+
+	// ===== Logging =====
+	// Remove manual log4j-core unless you REALLY need it
+	// Spring Boot already provides Logback securely
+
+	// ===== Apache =====
+	implementation 'org.apache.httpcomponents.client5:httpclient5'
+	implementation 'org.apache.commons:commons-lang3'
+	implementation 'commons-fileupload:commons-fileupload:1.6.0'
+	implementation 'commons-io:commons-io:2.15.1'
+
+
+	// ===== Monitoring =====
+	implementation 'io.sentry:sentry:7.14.0'
+
+	// ===== Custom JAR =====
+	implementation files('DAESLogIntegrity.jar')
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
