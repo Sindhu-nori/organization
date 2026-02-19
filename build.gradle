@@ -3,9 +3,7 @@ plugins {
 	id 'org.springframework.boot' version '3.5.10'
 	id 'io.spring.dependency-management' version '1.1.7'
 	id 'java'
-	//id 'org.graalvm.buildtools.native' version '0.10.6'
 
-	id "com.github.spotbugs" version "6.0.18"
 }
 
 group = 'com.dtt'
@@ -23,7 +21,6 @@ java {
 repositories {
 	mavenCentral()
 }
-
 dependencies {
 
 	implementation files('DAESLogIntegrity.jar')
@@ -43,25 +40,22 @@ dependencies {
 	implementation 'org.postgresql:postgresql:42.7.3'
 
 	implementation 'commons-io:commons-io:2.15.1'
-	implementation 'org.apache.httpcomponents:httpclient:4.5.14'
+
+	// ✅ Keep only HttpClient 5
 	implementation 'org.apache.httpcomponents.client5:httpclient5:5.3.1'
 
 	implementation 'org.apache.logging.log4j:log4j-core:2.25.3'
+
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
 
-	spotbugsPlugins "com.h3xstream.findsecbugs:findsecbugs-plugin:1.12.0"
+	// ✅ Fix CVE
+	implementation 'org.apache.commons:commons-lang3:3.18.0'
 
-	implementation 'org.apache.httpcomponents.client5:httpclient5:5.2.3'
 }
-
-tasks.withType(com.github.spotbugs.snom.SpotBugsTask).configureEach {
-	reports {
-		html.required.set(true)
-		xml.required.set(false)
+configurations.all {
+	resolutionStrategy {
+		force 'org.apache.commons:commons-lang3:3.18.0'
 	}
-}
-tasks.withType(com.github.spotbugs.snom.SpotBugsTask).configureEach {
-	ignoreFailures = true
 }
 
 

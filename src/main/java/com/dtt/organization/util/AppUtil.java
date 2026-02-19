@@ -30,10 +30,13 @@ import com.dtt.organization.constant.ApiResponses;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class AppUtil {
+
+   static   Logger logger = LoggerFactory.getLogger(AppUtil.class);
 	
 	/** The upper alphabet. */
 	static String upperAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -215,7 +218,7 @@ public class AppUtil {
         try {
             newJsonData = mapper.writeValueAsString(paths);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error("Unexpected exception", e);
         }
         return newJsonData;
     }
@@ -232,7 +235,7 @@ public class AppUtil {
 
 
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.error("Unexpected exception", e);
         }
         return paths;
     }
@@ -266,7 +269,7 @@ public class AppUtil {
                     new TypeReference<Map<String, String>>() {});
             return map;
         } catch (JsonProcessingException e) {
-            e.printStackTrace(); 
+            logger.error("Unexpected exception", e);
         }
         return null;
     }

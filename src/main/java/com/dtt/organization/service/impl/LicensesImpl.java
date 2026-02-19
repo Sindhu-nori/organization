@@ -27,6 +27,8 @@ import jakarta.persistence.QueryTimeoutException;
 
 
 import org.hibernate.exception.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -95,6 +97,8 @@ public class LicensesImpl implements LicensesIface {
 
 	@Autowired
 	public RestTemplate restTemplate;
+
+	Logger logger = LoggerFactory.getLogger(LicensesImpl.class);
 
 	@Value(value = "${url.admin.emaillist}")
 	private String url;
@@ -489,7 +493,7 @@ public class LicensesImpl implements LicensesIface {
 				return AppUtil.createApiResponse(true, "Organization Uid coming null or empty", null);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, "Something went wrong. Please try after sometime", null);
 		}
 //		return AppUtil.createApiResponse(false, "Something went wrong", null);
@@ -506,7 +510,7 @@ public class LicensesImpl implements LicensesIface {
 					softwareLicenses.getLicenseInfo());
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, "An Exception Occurred" + e.getMessage(), null);
 		}
 	}
@@ -558,7 +562,7 @@ public class LicensesImpl implements LicensesIface {
 //			return AppUtil.createApiResponse(true, "Licenses Fetched Successfully", softwareLicenses);
 //
 //		} catch (Exception e) {
-//			e.printStackTrace();
+//			log.error("Unexpected exception", e);
 //			return AppUtil.createApiResponse(false, "An Exception Occurred", null);
 //		}
 //	}
@@ -618,7 +622,7 @@ public class LicensesImpl implements LicensesIface {
 			return AppUtil.createApiResponse(true, "Licenses Fetched Successfully", softwareLicenses);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, "An Exception Occurred", null);
 		}
 	}
@@ -668,7 +672,7 @@ public class LicensesImpl implements LicensesIface {
 			return AppUtil.createApiResponse(true, "Licenses Fetched Successfully", softwareLicenses);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, "An Exception Occurred", null);
 		}
 	}
@@ -707,7 +711,7 @@ public class LicensesImpl implements LicensesIface {
 			return new String(enc);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return e.getMessage();
 		}
 	}
@@ -789,7 +793,7 @@ public class LicensesImpl implements LicensesIface {
 				return AppUtil.createApiResponse(true, "List for generate Licenses", softwareLicenses);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, "Something went wrong. Please try after sometime", null);
 		}
 	}
@@ -833,7 +837,7 @@ public class LicensesImpl implements LicensesIface {
 			}
 			return AppUtil.createApiResponse(true, "Email send successfully", null);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false,
 					"Sorry! There's a glitch. We're working on it, please try again shortly.", null);
 		}
@@ -888,7 +892,7 @@ public class LicensesImpl implements LicensesIface {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false,
 					"Sorry! There's a glitch. We're working on it, please try again shortly.", null);
 		}
@@ -942,22 +946,22 @@ public class LicensesImpl implements LicensesIface {
 				return AppUtil.createApiResponse(true, "", recipients);
 			}
 		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, e.getMessage(), (Object) null);
 		} catch (IllegalStateException e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, e.getMessage(), (Object) null);
 		} catch (NullPointerException e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, e.getMessage(), (Object) null);
 		} catch (HttpClientErrorException e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, e.getMessage(), (Object) null);
 		} catch (HttpServerErrorException e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, e.getMessage(), (Object) null);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, e.getMessage(), (Object) null);
 		}
 		return AppUtil.createApiResponse(false, "Server not reachable, please try after sometime", (Object) null);
@@ -1006,7 +1010,7 @@ public class LicensesImpl implements LicensesIface {
 
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, "Something went wrong. Please try after sometime", null);
 		}
 	}
@@ -1025,7 +1029,7 @@ public class LicensesImpl implements LicensesIface {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, "Something went wrong. Please try after sometime", null);
 		}
 	}
@@ -1046,7 +1050,7 @@ public class LicensesImpl implements LicensesIface {
 
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, "Something went wrong. Please try after sometime", null);
 		}
 	}
@@ -1070,7 +1074,7 @@ public class LicensesImpl implements LicensesIface {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, "Something went wrong. Please try after sometime", null);
 		}
 	}
@@ -1091,10 +1095,10 @@ public class LicensesImpl implements LicensesIface {
 
 		} catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException
 				 | PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, "Something went wrong. Please try after sometime", null);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, "Something went wrong. Please try after sometime", null);
 		}
 	}

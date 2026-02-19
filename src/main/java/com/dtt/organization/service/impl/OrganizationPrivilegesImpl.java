@@ -92,7 +92,7 @@ public class OrganizationPrivilegesImpl implements OrganizationPrivilegesIface {
 //               return AppUtil.createApiResponse(false,"organization Not Found",null);
 //           }
 //       }catch (Exception e){
-//           e.printStackTrace();
+//           log.error("Unexpected exception", e);
 //           logger.error("{} - {} : Exception occurred during organization Privilege Creation: {}", CLASS,
 //                   Utility.getMethodName(), e.getMessage());
 //           return ExceptionHandlerUtil.handleException(e);
@@ -137,7 +137,7 @@ public class OrganizationPrivilegesImpl implements OrganizationPrivilegesIface {
 //                return AppUtil.createApiResponse(false,"organization Not Found",null);
 //            }
 //        }catch (Exception e){
-//            e.printStackTrace();
+//            log.error("Unexpected exception", e);
 //            logger.error("{} - {} : Exception occurred during organization Privilege Update: {}", CLASS,
 //                    Utility.getMethodName(), e.getMessage());
 //            return AppUtil.createApiResponse(false,"Sorry! There's a glitch. We're working on it, please try again shortly.",null);
@@ -153,7 +153,7 @@ public class OrganizationPrivilegesImpl implements OrganizationPrivilegesIface {
 //                return AppUtil.createApiResponse(true, "Records retrieved successfully.", privilegesList);
 //
 //        } catch (Exception e) {
-//            e.printStackTrace();
+//            log.error("Unexpected exception", e);
 //            logger.error("{} - {} : Exception occurred during organization Privilege GET: {}", CLASS,
 //                    Utility.getMethodName(), e.getMessage());
 //            return AppUtil.createApiResponse(false, "Unable to process your request at the moment. Please try again later.", null);
@@ -180,7 +180,7 @@ public class OrganizationPrivilegesImpl implements OrganizationPrivilegesIface {
 //
 ////            return privileges.map(organizationPrivileges -> AppUtil.createApiResponse(true, "Privileges retrieved successfully.", organizationPrivileges)).orElseGet(() -> AppUtil.createApiResponse(false, "No privileges found for the specified organization.", null));
 //        } catch (Exception e) {
-//            e.printStackTrace();
+//            log.error("Unexpected exception", e);
 //            logger.error("{} - {} : Exception occurred during organization Privilege GET BY ID: {}", CLASS,
 //                    Utility.getMethodName(), e.getMessage());
 //            return AppUtil.createApiResponse(false, "Unable to process your request at the moment. Please try again later.", null);
@@ -203,7 +203,7 @@ public class OrganizationPrivilegesImpl implements OrganizationPrivilegesIface {
 //            logger.info("{} - {} :Organisation Privileges Deleted ", CLASS, Utility.getMethodName());
 //            return AppUtil.createApiResponse(true,"Privileges Deleted successfully",null);
 //        } catch (Exception e) {
-//            e.printStackTrace();
+//            log.error("Unexpected exception", e);
 //            logger.error("{} - {} : Exception occurred during organization Privilege DELETE: {}", CLASS,
 //                    Utility.getMethodName(), e.getMessage());
 //            return AppUtil.createApiResponse(false, "Unable to process your request at the moment. Please try again later.", null);
@@ -247,7 +247,7 @@ public class OrganizationPrivilegesImpl implements OrganizationPrivilegesIface {
 //
 ////            return privileges.map(organizationPrivileges -> AppUtil.createApiResponse(true, "Privileges retrieved successfully.", organizationPrivileges)).orElseGet(() -> AppUtil.createApiResponse(false, "No privileges found for the specified organization.", null));
 //        } catch (Exception e) {
-//            e.printStackTrace();
+//            log.error("Unexpected exception", e);
 //            logger.error("{} - {} : Exception occurred during organization Privilege GET BY ORG ID: {}", CLASS,
 //                    Utility.getMethodName(), e.getMessage());
 //            return AppUtil.createApiResponse(false, "Unable to process your request at the moment. Please try again later.", null);
@@ -278,7 +278,7 @@ public class OrganizationPrivilegesImpl implements OrganizationPrivilegesIface {
                 return AppUtil.createApiResponse(true,"Data Retrieved Successfully",organisationPrivilegesResponse);
             }
         }catch (Exception e){
-            e.printStackTrace();
+
             logger.error("{} - {} : Exception occurred during organization Privilege GET BY ID: {}", CLASS,
                     Utility.getMethodName(), e.getMessage());
             return AppUtil.createApiResponse(false, "Unable to process your request at the moment. Please try again later.", null);
@@ -339,7 +339,7 @@ public class OrganizationPrivilegesImpl implements OrganizationPrivilegesIface {
             List<OrganizationPrivileges> organizationPrivilegesList1=organisationPrivilegesRepository.saveAll(organizationPrivilegesList);
             return AppUtil.createApiResponse(true,"Organization Privileges Requested Successfully",organizationPrivilegesList1);
         }catch (Exception e){
-            e.printStackTrace();
+
             logger.error("{} - {} : Exception occurred during organization Privilege REQUEST: {}", CLASS,
                     Utility.getMethodName(), e.getMessage());
             return AppUtil.createApiResponse(false, "Unable to process your request at the moment. Please try again later.", null);
@@ -379,7 +379,7 @@ public class OrganizationPrivilegesImpl implements OrganizationPrivilegesIface {
         OrganizationPrivileges organizationPrivileges1=organisationPrivilegesRepository.save(organizationPrivileges);
         return AppUtil.createApiResponse(true,"Privilege Updated SuccessFully",organizationPrivileges1);
     }catch (Exception e){
-            e.printStackTrace();
+
             logger.error("{} - {} : Exception occurred during organization Privilege  UPDATE: {}", CLASS,
                     Utility.getMethodName(), e.getMessage());
             return AppUtil.createApiResponse(false, "Unable to process your request at the moment. Please try again later.", null);
@@ -391,7 +391,7 @@ public class OrganizationPrivilegesImpl implements OrganizationPrivilegesIface {
         try{
             return AppUtil.createApiResponse(true,"Records Fetched successfully",organisationPrivilegesRepository.getAll());
         }catch (Exception e){
-            e.printStackTrace();
+
             logger.error("{} - {} : Exception occurred during organization Privilege GET ALL: {}", CLASS,
                     Utility.getMethodName(), e.getMessage());
             return AppUtil.createApiResponse(false, "Unable to process your request at the moment. Please try again later.", null);
@@ -408,7 +408,7 @@ public class OrganizationPrivilegesImpl implements OrganizationPrivilegesIface {
              return AppUtil.createApiResponse(true,"Record Fetched Successfully",organisationPrivilegesRepository.fetchById(id));
          }
 }catch (Exception e){
-            e.printStackTrace();
+
             logger.error("{} - {} : Exception occurred during organization Privilege GET BY ID: {}", CLASS,
                     Utility.getMethodName(), e.getMessage());
             return AppUtil.createApiResponse(false, "Unable to process your request at the moment. Please try again later.", null);
@@ -427,7 +427,7 @@ public class OrganizationPrivilegesImpl implements OrganizationPrivilegesIface {
             }
             return AppUtil.createApiResponse(true,"Records Fetched Successfully",organisationPrivilegesRepository.fetchPrivilegesByOrganisation(orgId));
         }catch (Exception e){
-            e.printStackTrace();
+
             logger.error("{} - {} : Exception occurred during organization Privilege GET BY ORGANIZATION: {}", CLASS,
                     Utility.getMethodName(), e.getMessage());
             return AppUtil.createApiResponse(false, "Unable to process your request at the moment. Please try again later.", null);
@@ -476,7 +476,7 @@ public class OrganizationPrivilegesImpl implements OrganizationPrivilegesIface {
             List<OrganizationPrivileges> organizationPrivilegesListDB=organisationPrivilegesRepository.saveAll(organizationPrivilegesList);
             return AppUtil.createApiResponse(true,"Privileges Updated Successfully",organizationPrivilegesListDB);
             }catch (Exception e){
-            e.printStackTrace();
+
             logger.error("{} - {} : Exception occurred during organization Privilege UPDATE ORG PRIVILEGE LIST: {}", CLASS,
                     Utility.getMethodName(), e.getMessage());
             return AppUtil.createApiResponse(false, "Unable to process your request at the moment. Please try again later.", null);
@@ -489,7 +489,7 @@ public class OrganizationPrivilegesImpl implements OrganizationPrivilegesIface {
      try{
         return AppUtil.createApiResponse(true,"Privileges fetched successfully",privileges);
      }catch (Exception e){
-       e.printStackTrace();
+
          logger.error("{} - {} : Exception occurred during organization Privilege GET NAMES{}", CLASS,
                  Utility.getMethodName(), e.getMessage());
          return AppUtil.createApiResponse(false, "Unable to process your request at the moment. Please try again later.", null);

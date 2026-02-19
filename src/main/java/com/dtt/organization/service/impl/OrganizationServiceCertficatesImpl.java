@@ -307,7 +307,7 @@ public class OrganizationServiceCertficatesImpl implements OrganizationCertifica
 			logger.info("{} - {}: Response received from debit usage API: {}", CLASS, methodName, response.getBody());
 			return response.getBody();
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			logger.error("{} - {}: Exception occurred HttpClientErrorException while processing postpaid debit: {}",
 					CLASS, methodName, e.getMessage(), e);
 			return exceptionHandlerUtil.handleHttpException(e);
@@ -782,7 +782,7 @@ public class OrganizationServiceCertficatesImpl implements OrganizationCertifica
 			// Known application-level exception  rethrow without wrapping
 			throw exceptionHandlerUtil.orgnizationServiceCustomrException(e.getMessage());
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			logger.error("{} - {}: Error occurred in issueOrganizationCertificatesNew: {}", CLASS, methodName,
 					e.getMessage(), e);
 			throw exceptionHandlerUtil
@@ -963,12 +963,12 @@ public class OrganizationServiceCertficatesImpl implements OrganizationCertifica
 						.createErrorResponse(Constant.API_ERROR_SOMETHING_WENT_WRONG_PLEASE_TRY_AFTER_SOMETIME);
 			}
 		} catch (HttpClientErrorException e) {
-			e.printStackTrace();
+
 			logger.error("{} - {}: Exception occurred HttpClientErrorException: {}", CLASS, methodName, e.getMessage(),
 					e);
 			return exceptionHandlerUtil.handleHttpException(e);
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			logger.error("{} - {}: Exception occurred: {}", CLASS, methodName, e.getMessage(), e);
 			return ExceptionHandlerUtil.handleException(e);
 		}
@@ -1054,7 +1054,7 @@ public class OrganizationServiceCertficatesImpl implements OrganizationCertifica
 						.createErrorResponse(Constant.API_ERROR_SOMETHING_WENT_WRONG_PLEASE_TRY_AFTER_SOMETIME);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			logger.error("{} - {}: Error sending email to SPOC: {}", CLASS, methodName, e.getMessage(), e);
 			return exceptionHandlerUtil.handleHttpException(e);
 		}
@@ -1426,7 +1426,7 @@ public class OrganizationServiceCertficatesImpl implements OrganizationCertifica
 			return exceptionHandlerUtil.createSuccessResponse(Constant.API_RESPONSE_WALLET_CERTIFICATE,
 					walletSignCertificate1);
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return ExceptionHandlerUtil.handleException(e);
 		}
 	}

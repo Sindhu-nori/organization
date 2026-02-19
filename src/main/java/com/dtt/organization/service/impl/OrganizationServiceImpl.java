@@ -1,18 +1,9 @@
 package com.dtt.organization.service.impl;
 
+import java.io.InputStream;
 import java.security.SecureRandom;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import jakarta.transaction.Transactional;
@@ -23,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -117,8 +109,16 @@ public class OrganizationServiceImpl implements OrganizationIface {
 	private String emailPassword;
 
 	@Value(value = "${spring.mail.port}")
-	private int emailPort;
 
+	private int emailPort;
+	@Value(value = "${send.log}")
+	private String sendLog;
+
+	@Value(value = "${sample.spoc.name}")
+	private String sampleSPOCName;
+
+	@Value(value = "${sample.spoc.mobile}")
+	private String sampleSPOCMobile;
 	private final OrganizationDetailsRepository organizationDetailsRepository;
 
 	private final OrgContactsEmailRepository orgContactsEmailRepository;
@@ -196,6 +196,63 @@ public class OrganizationServiceImpl implements OrganizationIface {
 	}
 
 
+//	@Transactional
+//	@Override
+//	public ApiResponses registerOrganization(RegisterOrganizationDTO registerOrganizationDTO) {
+//		try {
+//			String result= ValidationUtil.validate(registerOrganizationDTO);
+//			if(result!=null){
+//				throw new OrgnizationServiceException(result);
+//			}
+//			if (Objects.isNull(registerOrganizationDTO)) {
+//				logger.error("{} - {} : Organization details can't be null", CLASS, Utility.getMethodName());
+//				return exceptionHandlerUtil.createErrorResponse(Constant.API_ERROR_ORGANIZATION_DETAILS_CANT_BE_NULL);
+//			}
+//
+//			String ouid = generateOrganizationUniqueId();
+//
+//			Optional<OrganizationDetails> orgDetails = Optional.ofNullable(organizationDetailsRepository
+//					.getOrgnizationDetailsByName(registerOrganizationDTO.getOrganizationName().trim()));
+//			if (orgDetails.isPresent()) {
+//				logger.warn("{} - {} : Organization name already used: {}", CLASS, Utility.getMethodName(),
+//						registerOrganizationDTO.getOrganizationName());
+//				return exceptionHandlerUtil
+//						.createErrorResponse(Constant.API_ERROR_ORGANIZATION_NAME_ALREADY_USED_PLEASE_CHOOSE_ANOTHER);
+//			}
+//
+//			OrganizationDetails organizationDetails = buildOrganizationDetails(registerOrganizationDTO, ouid);
+//			organizationDetailsRepository.save(organizationDetails);
+//
+//			saveOrganizationStatus(organizationDetails);
+//			saveEmailDomain(registerOrganizationDTO, organizationDetails);
+//			saveSignatureTemplates(registerOrganizationDTO, organizationDetails);
+//			saveOrgUsers(registerOrganizationDTO, organizationDetails);
+//
+//			if (registerOrganizationDTO.getDirectorsEmailList() != null) {
+//				saveOrganizationDirectors(registerOrganizationDTO, organizationDetails);
+//			}
+//
+//			saveDocumentCheckBoxes(registerOrganizationDTO, organizationDetails);
+//
+//			sendConfirmationEmail(registerOrganizationDTO);
+//
+//
+//			logger.info("{} - {} : Organization Registered Successfully", CLASS, Utility.getMethodName());
+//			return exceptionHandlerUtil.createSuccessResponse(Constant.API_RESPONSE_ORGANIZATION_REGISTERD, organizationDetails);
+//
+//		}catch (OrgnizationServiceException o){
+//			logger.error("{} - {} : OrgnizationServiceException occurred during organization registration: {}", CLASS,
+//					Utility.getMethodName(), o.getMessage());
+//			return ExceptionHandlerUtil.handleException(o);
+//		}
+//		catch (Exception e) {
+//			logger.error("{} - {} : Exception occurred during organization registration: {}", CLASS,
+//					Utility.getMethodName(), e.getMessage());
+//			return ExceptionHandlerUtil.handleException(e);
+//		}
+//	}
+
+
 	@Transactional
 	@Override
 	public ApiResponses registerOrganization(RegisterOrganizationDTO registerOrganizationDTO) {
@@ -236,6 +293,43 @@ public class OrganizationServiceImpl implements OrganizationIface {
 
 			sendConfirmationEmail(registerOrganizationDTO);
 
+			logger.info("{} - {} : Organization Registered Successfully", CLASS, Utility.getMethodName());
+
+
+//			ClassPathResource resource = new ClassPathResource("static/sample-org-logo.png");
+//			byte[] fileBytes = Files.readAllBytes(resource.getFile().toPath());
+//
+//
+//			Map<String, Object> logBody = new HashMap<>();
+//			logBody.put("orgId", organizationDetails.getOrganizationUid());
+//			logBody.put("orgName", organizationDetails.getOrganizationName());
+//			logBody.put("spocEmail", organizationDetails.getSpocUgpassEmail());
+//			logBody.put("orgLogo", Base64.getEncoder().encodeToString(fileBytes));
+//			logBody.put("spocName", sampleSPOCName);
+//			logBody.put("spocMobileNumber", sampleSPOCMobile);
+//
+//			sendLog(logBody);
+
+
+			ClassPathResource resource = new ClassPathResource("static/sample-org-logo.png");
+
+			byte[] fileBytes;
+			try (InputStream inputStream = resource.getInputStream()) {
+				fileBytes = inputStream.readAllBytes();
+			}
+
+			Map<String, Object> logBody = new HashMap<>();
+			logBody.put("orgId", organizationDetails.getOrganizationUid());
+			logBody.put("orgName", organizationDetails.getOrganizationName());
+			logBody.put("spocEmail", organizationDetails.getSpocUgpassEmail());
+			logBody.put("orgLogo", Base64.getEncoder().encodeToString(fileBytes));
+			logBody.put("spocName", sampleSPOCName);
+			logBody.put("spocMobileNumber", sampleSPOCMobile);
+
+			sendLog(logBody);
+
+
+
 
 			logger.info("{} - {} : Organization Registered Successfully", CLASS, Utility.getMethodName());
 			return exceptionHandlerUtil.createSuccessResponse(Constant.API_RESPONSE_ORGANIZATION_REGISTERD, organizationDetails);
@@ -252,6 +346,28 @@ public class OrganizationServiceImpl implements OrganizationIface {
 		}
 	}
 
+	private void sendLog(Map<String, Object> logBody) {
+		try {
+
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+
+			HttpEntity<Object> requestEntity = new HttpEntity<>(logBody, headers);
+
+			ResponseEntity<Object> res = restTemplate.exchange(sendLog, HttpMethod.POST, requestEntity,
+					Object.class);
+			if (res.getStatusCodeValue() == 200) {
+				logger.info("{} - {}: Log sent successfully", CLASS, Utility.getMethodName());
+			} else {
+				logger.error("{} - {}: Log send failed with status: {}", CLASS, Utility.getMethodName(),
+						res.getStatusCodeValue());
+			}
+
+		} catch (Exception e) {
+			logger.error("{} - {} - {} : Error sending log ", CLASS, Utility.getMethodName(),
+					e.getMessage());
+		}
+	}
 	private OrganizationDetails buildOrganizationDetails(RegisterOrganizationDTO registerOrganizationDTO, String ouid) {
 		OrganizationDetails organizationDetails = new OrganizationDetails();
 		organizationDetails.setOrganizationUid(ouid);
@@ -751,7 +867,7 @@ public class OrganizationServiceImpl implements OrganizationIface {
 			return exceptionHandlerUtil.createSuccessResponse(Constant.API_RESPONSE_ORGANIZATION_UPDATED,
 					updateOrganizationDTO);
 		}catch (OrgnizationServiceException e) {
-			e.printStackTrace();
+
 			return ExceptionHandlerUtil.handleException(e);
 		} catch (Exception e) {
 			logger.error("{} - {}: Exception occurred during organization update for UID: {}: {}", CLASS,
@@ -1100,7 +1216,7 @@ public class OrganizationServiceImpl implements OrganizationIface {
 			return apiResponse;
 
 		} catch (HttpClientErrorException e) {
-			e.printStackTrace();
+
 			logger.error("{} - {}: Exception occurred HttpStatusCodeException during document verification: {}", CLASS, Utility.getMethodName(),
 					e.getMessage(), e);
 			return exceptionHandlerUtil.handleHttpException(e);
@@ -1238,7 +1354,7 @@ public class OrganizationServiceImpl implements OrganizationIface {
 					orgPrepetryStatusDto);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			logger.error("{} - {}: Exception occurred: {}", CLASS, Utility.getMethodName(), e.getMessage(), e);
 			return ExceptionHandlerUtil.handleException(e);
 		}
@@ -1258,7 +1374,7 @@ public class OrganizationServiceImpl implements OrganizationIface {
 			logger.info("{} - {}: Organization list retrieved successfully", CLASS, Utility.getMethodName());
 			return exceptionHandlerUtil.createSuccessResponse(Constant.API_RESPONSE_ORGANIZATION_LIST, details);
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			logger.error("{} - {}: Exception occurred: {}", CLASS, Utility.getMethodName(), e.getMessage(), e);
 			return ExceptionHandlerUtil.handleException(e);
 		}
@@ -1278,7 +1394,7 @@ public class OrganizationServiceImpl implements OrganizationIface {
 			logger.info("{} - {}: Organization list retrieved successfully", CLASS, Utility.getMethodName());
 			return exceptionHandlerUtil.createSuccessResponse(Constant.API_RESPONSE_ORGANIZATION_LIST, details);
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			logger.error("{} - {}: Exception occurred: {}", CLASS, Utility.getMethodName(), e.getMessage(), e);
 			return ExceptionHandlerUtil.handleException(e);
 		}
@@ -1332,7 +1448,7 @@ public class OrganizationServiceImpl implements OrganizationIface {
 		} catch (Exception e) {
 			logger.error("{} - {}: Exception occurred while fetching templates: {}", CLASS, Utility.getMethodName(),
 					e.getMessage(), e);
-			e.printStackTrace();
+
 			return ExceptionHandlerUtil.handleException(e);
 		}
 	}
@@ -1355,7 +1471,7 @@ public class OrganizationServiceImpl implements OrganizationIface {
 		} catch (Exception e) {
 			logger.error("{} - {}: Exception occurred while fetching templates: {}", CLASS, Utility.getMethodName(),
 					e.getMessage(), e);
-			e.printStackTrace();
+
 			return ExceptionHandlerUtil.handleException(e);
 		}
 	}
@@ -1375,7 +1491,7 @@ public class OrganizationServiceImpl implements OrganizationIface {
 		catch (Exception e) {
 			logger.error("{} - {}: Exception occurred while fetching templates: {}", CLASS, Utility.getMethodName(),
 					e.getMessage(), e);
-			e.printStackTrace();
+
 			return ExceptionHandlerUtil.handleException(e);
 		}
 
@@ -1534,7 +1650,7 @@ public class OrganizationServiceImpl implements OrganizationIface {
 					return exceptionHandlerUtil.createErrorResponse(Constant.API_ERROR_INVALID_TEMPLATE_ID);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			logger.error("{} - {}: Exception occurred while fetching user template details for orgId: {}: {}", CLASS,
 					methodName, getTemplateDto.getOrgId(), e.getMessage(), e);
 			return ExceptionHandlerUtil.handleException(e);
@@ -1589,7 +1705,7 @@ public class OrganizationServiceImpl implements OrganizationIface {
 					detailsResDTOs);
 			return exceptionHandlerUtil.createSuccessResponse(Constant.API_RESPONSE_ORGANIZATION_LIST, detailsResDTOs);
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			logger.error("{} - {}: Exception occurred while fetching organization list for suid: {}: {}", CLASS,
 					methodName, suid, e.getMessage(), e);
 			return ExceptionHandlerUtil.handleException(e);
@@ -1700,7 +1816,7 @@ public class OrganizationServiceImpl implements OrganizationIface {
 			}
 			return otp.toString();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return null;
 		}
 	}
@@ -1746,7 +1862,7 @@ public class OrganizationServiceImpl implements OrganizationIface {
 			Result result = DAESService.encryptData(s);
 			return new String(result.getResponse());
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return e.getMessage();
 		}
 	}
@@ -1989,7 +2105,7 @@ public class OrganizationServiceImpl implements OrganizationIface {
 			return exceptionHandlerUtil.createSuccessResponse(Constant.API_RESPONSE_SIGNATORY_LIST_FOUND, orgSignatories);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			logger.error("{} - {}: Error occurred while fetching signatory list for orgUid: {}: {}", CLASS, methodName,
 					organizationUid, e.getMessage(), e);
 			return ExceptionHandlerUtil.handleException(e);
@@ -2106,7 +2222,7 @@ public class OrganizationServiceImpl implements OrganizationIface {
 			return AppUtil.createApiResponse(false, errorMsg, null);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			logger.error("{} - {}: Error Exception while sending email to SPOC: {}: {}", CLASS,
 					methodName, spocEmail, e.getMessage(), e);
 			return exceptionHandlerUtil.handleHttpException(e);
@@ -2127,7 +2243,7 @@ public class OrganizationServiceImpl implements OrganizationIface {
 			organizationDetailsRepository.save(organizationDetails);
 			return AppUtil.createApiResponse(true,"Admin access updated successfully",null);
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			logger.error("{} - {}: Error Exception while toggling manageByAdmin: {}: {}", CLASS, e.getMessage(), e);
 			return exceptionHandlerUtil.handleHttpException(e);
 		}
@@ -2200,7 +2316,7 @@ public class OrganizationServiceImpl implements OrganizationIface {
 			return AppUtil.createApiResponse(true, "Templates validated successfully", checkTemplateDtoList);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			logger.error("{} - {}: Error Exception while checking templates: {}", CLASS, e.getMessage(), e);
 			return exceptionHandlerUtil.handleHttpException(e);
 		}
@@ -2225,7 +2341,7 @@ public class OrganizationServiceImpl implements OrganizationIface {
 			return AppUtil.createApiResponse(true, "Organization statistics fetched successfully", stats);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			logger.error("{} - {}: Error while fetching organization stats: {}", CLASS, e.getMessage(), e);
 			return exceptionHandlerUtil.handleHttpException(e);
 		}

@@ -1481,7 +1481,7 @@ public class BeneficiaryImpl implements BeneficiaryIface {
 			ex.printStackTrace();
 			return AppUtil.createApiResponse(false, "Something went wrong please try after sometime", null);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, "Something went wrong. Please contact admin", null);
 		}
 	}
@@ -1500,16 +1500,16 @@ public class BeneficiaryImpl implements BeneficiaryIface {
 	    	}
 	    	
 	    }catch (IllegalArgumentException e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false,"Invalid input format.", (Object) null);
 		} catch (IllegalStateException e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false,"State violation: Operation is not valid in the current context.", (Object) null);
 		} catch (NullPointerException e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false,e.getMessage(), (Object) null);
 		} catch (HttpClientErrorException e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			if (e.getStatusCode() == HttpStatus.BAD_REQUEST) {
 				return AppUtil.createApiResponse(false, messageSource.getMessage("api.error.invalid.parameter", null, Locale.ENGLISH), null);
 			} else if (e.getStatusCode() == HttpStatus.REQUEST_TIMEOUT) {
@@ -1523,7 +1523,7 @@ public class BeneficiaryImpl implements BeneficiaryIface {
 						null);
 			}
 		} catch (HttpServerErrorException e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			if (e.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR) {
 				return AppUtil.createApiResponse(false,
 						messageSource.getMessage("api.error.request.not.completed.because.of.internal.server.error",
@@ -1545,12 +1545,12 @@ public class BeneficiaryImpl implements BeneficiaryIface {
 			
 		}catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException
 				| PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, messageSource.getMessage("api.error.there.was.an.issue.connecting.with.our.service", null,
 					Locale.ENGLISH), null);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, messageSource.getMessage("api.error.something.went.wrong.please.contact.admin", null,
 					Locale.ENGLISH), null);
 		}

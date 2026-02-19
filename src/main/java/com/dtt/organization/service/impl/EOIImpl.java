@@ -129,12 +129,12 @@ public class EOIImpl implements EOIIface {
 		catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException |
 			   PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException e)
 		{
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			logger.error(CLASS + " registerTrustedOrganizationEOIPortal() :: IN DATABASE EXCEPTION {}" , e.getMessage());
 			return AppUtil.createApiResponse(false, messageSource.getMessage("api.error.something.went.wrong.please.try.after.sometime",null, Locale.ENGLISH), null);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			logger.info(CLASS + "registerTrustedOrganizationEOIPortal >> ERROR>> " + e.getMessage());
 			return AppUtil.createApiResponse(false, messageSource.getMessage("api.error.something.went.wrong.please.try.after.sometime",null, Locale.ENGLISH), null);
 		}
@@ -165,7 +165,7 @@ public class EOIImpl implements EOIIface {
 			}
 			return AppUtil.createApiResponse(false, messageSource.getMessage("api.error.something.went.wrong.please.contact.admin",null, Locale.ENGLISH), null);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, messageSource.getMessage("api.error.something.went.wrong.please.contact.admin",null, Locale.ENGLISH), null);
 		}
 	}
@@ -202,7 +202,7 @@ public class EOIImpl implements EOIIface {
 				return AppUtil.createApiResponse(false, messageSource.getMessage("api.error.email.send.failed",null, Locale.ENGLISH), null);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, messageSource.getMessage("api.error.please.try.after.sometime",null, Locale.ENGLISH), (Object) null);
 		}
 	}
@@ -223,7 +223,7 @@ public class EOIImpl implements EOIIface {
 				return AppUtil.createApiResponse(false, messageSource.getMessage("api.error.email.send.failed",null, Locale.ENGLISH), null);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, messageSource.getMessage("api.error.something.went.wrong.please.contact.admin",null, Locale.ENGLISH), null);
 		}
 	}
@@ -238,7 +238,7 @@ public class EOIImpl implements EOIIface {
 			}
 			return otp.toString();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return null;
 		}
 	}
@@ -248,7 +248,7 @@ public class EOIImpl implements EOIIface {
 			Result result = DAESService.encryptData(s);
 			return new String(result.getResponse());
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return e.getMessage();
 		}
 	}
@@ -317,7 +317,7 @@ public class EOIImpl implements EOIIface {
 				return AppUtil.createApiResponse(true, messageSource.getMessage("api.response.trusted.stakeHolder.added.successfully",null, Locale.ENGLISH), null);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, messageSource.getMessage("api.error.something.went.wrong.please.contact.admin",null, Locale.ENGLISH), null);
 		}
 	}
@@ -334,7 +334,7 @@ public class EOIImpl implements EOIIface {
 				return AppUtil.createApiResponse(false, messageSource.getMessage("api.error.trusted.stakeHolder.not.found",null, Locale.ENGLISH), null);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, messageSource.getMessage("api.error.something.went.wrong.please.contact.admin",null, Locale.ENGLISH), null);
 		}
 	}
@@ -356,7 +356,7 @@ public class EOIImpl implements EOIIface {
 				return AppUtil.createApiResponse(true, messageSource.getMessage("api.response.trusted.stake.holder.found",null, Locale.ENGLISH), trustedStakeholders);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, messageSource.getMessage("api.error.something.went.wrong.please.contact.admin",null, Locale.ENGLISH), null);
 		}
 	}
@@ -385,7 +385,7 @@ public class EOIImpl implements EOIIface {
 				return AppUtil.createApiResponse(false, messageSource.getMessage("api.error.trustedStakeHolder.cant.be.null.or.empty",null, Locale.ENGLISH), null);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, messageSource.getMessage("api.error.something.went.wrong.please.contact.admin",null, Locale.ENGLISH), null);
 		}
 	}
@@ -400,7 +400,7 @@ public class EOIImpl implements EOIIface {
 				return AppUtil.createApiResponse(true, messageSource.getMessage("api.response.trusted.stake.holder.found",null, Locale.ENGLISH), trustedStakeholders);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, messageSource.getMessage("api.error.something.went.wrong.please.contact.admin",null, Locale.ENGLISH), null);
 		}
 	}

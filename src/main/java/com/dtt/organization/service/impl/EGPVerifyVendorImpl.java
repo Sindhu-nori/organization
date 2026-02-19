@@ -83,19 +83,19 @@ public class EGPVerifyVendorImpl implements EGPVerifyVendorIFace {
             }
         } catch (IllegalArgumentException var10) {
             IllegalArgumentException e = var10;
-            e.printStackTrace();
+            logger.error("Unexpected exception", e);
             return AppUtil.createApiResponse(false, "Invalid input format.", (Object)null);
         } catch (IllegalStateException var11) {
             IllegalStateException e = var11;
-            e.printStackTrace();
+            logger.error("Unexpected exception", e);
             return AppUtil.createApiResponse(false, "State violation: Operation is not valid in the current context.", (Object)null);
         } catch (NullPointerException var12) {
             NullPointerException e = var12;
-            e.printStackTrace();
+            logger.error("Unexpected exception", e);
             return AppUtil.createApiResponse(false, e.getMessage(), (Object)null);
         } catch (HttpClientErrorException var13) {
             HttpClientErrorException e = var13;
-            e.printStackTrace();
+            logger.error("Unexpected exception", e);
             if (e.getStatusCode() == HttpStatus.BAD_REQUEST) {
                 return AppUtil.createApiResponse(false, messageSource.getMessage("api.error.invalid.parameter", (Object[])null, Locale.ENGLISH), (Object)null);
             } else {
@@ -103,7 +103,7 @@ public class EGPVerifyVendorImpl implements EGPVerifyVendorIFace {
             }
         } catch (HttpServerErrorException var14) {
             HttpServerErrorException e = var14;
-            e.printStackTrace();
+            logger.error("Unexpected exception", e);
             if (e.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR) {
                 return AppUtil.createApiResponse(false, messageSource.getMessage("api.error.request.not.completed.because.of.internal.server.error", (Object[])null, Locale.ENGLISH), (Object)null);
             } else if (e.getStatusCode() == HttpStatus.BAD_GATEWAY) {
@@ -113,7 +113,7 @@ public class EGPVerifyVendorImpl implements EGPVerifyVendorIFace {
             }
         } catch (Exception var15) {
             Exception e = var15;
-            e.printStackTrace();
+            logger.error("Unexpected exception", e);
             return AppUtil.createApiResponse(false, messageSource.getMessage("api.error.something.went.wrong.please.contact.admin", (Object[])null, Locale.ENGLISH), (Object)null);
         }
     }

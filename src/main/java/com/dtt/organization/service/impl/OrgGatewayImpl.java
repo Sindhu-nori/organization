@@ -10,6 +10,8 @@ import com.dtt.organization.service.iface.OrgGatewayIface;
 import com.dtt.organization.util.AppUtil;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -43,6 +45,10 @@ public class OrgGatewayImpl implements OrgGatewayIface {
 
 	@Autowired
 	RestTemplate restTemplate;
+
+	Logger logger= LoggerFactory.getLogger((OrgGatewayImpl.class));
+
+
 
 	@Value("${orgLink.notifyurl}")
 	private String orgLinkUrl;
@@ -121,7 +127,7 @@ public class OrgGatewayImpl implements OrgGatewayIface {
 
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, "User Not Found", null);
 		}
 
@@ -161,7 +167,7 @@ public class OrgGatewayImpl implements OrgGatewayIface {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, e.getMessage(), null);
 		}
 	}
@@ -180,7 +186,7 @@ public class OrgGatewayImpl implements OrgGatewayIface {
 			return AppUtil.createApiResponse(true, "Successfully fetched Eseal Logo", orgDetails.geteSealImage());
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, e.getMessage(), null);
 		}
 	}
@@ -205,7 +211,7 @@ public class OrgGatewayImpl implements OrgGatewayIface {
 			organizationDetailsRepository.save(organizationDetails);
 			return AppUtil.createApiResponse(true, "Successfully updated Eseal Logo", null);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, e.getMessage(), null);
 		}
 	}
@@ -236,7 +242,7 @@ public class OrgGatewayImpl implements OrgGatewayIface {
 			signatureTemplatesRepository.save(templates);
 			return AppUtil.createApiResponse(true, "Templates updated Successfully", null);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, e.getMessage(), null);
 		}
 	}
@@ -254,7 +260,7 @@ public class OrgGatewayImpl implements OrgGatewayIface {
 			signatureTemplateUpdateDto.setOrganizationUid(orgUid);
 			return AppUtil.createApiResponse(true, "fetched templates successfully", signatureTemplateUpdateDto);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, e.getMessage(), null);
 		}
 
@@ -330,7 +336,7 @@ public class OrgGatewayImpl implements OrgGatewayIface {
 			}
 			return AppUtil.createApiResponse(true, "Business Users Added Successfully", orgSubscriberEmail);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, e.getMessage(), null);
 		}
 	}
@@ -365,7 +371,7 @@ public class OrgGatewayImpl implements OrgGatewayIface {
 			organizationDetailsRepository.save(organizationDetails);
 			return AppUtil.createApiResponse(true, "Organisation Details Updated Successfully", null);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, e.getMessage(), null);
 		}
 
@@ -401,7 +407,7 @@ public class OrgGatewayImpl implements OrgGatewayIface {
 			organizationDetailsRepository.save(organizationDetails);
 			return AppUtil.createApiResponse(true, "Organisation Details Updated Successfully", null);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, e.getMessage(), null);
 		}
 
@@ -420,7 +426,7 @@ public class OrgGatewayImpl implements OrgGatewayIface {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, "Something went wrong. please try after sometime", null);
 		}
 	}
@@ -444,7 +450,7 @@ public class OrgGatewayImpl implements OrgGatewayIface {
 				return AppUtil.createApiResponse(false, "Business User Not Found", null);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, "something went wrong", null);
 		}
 	}
@@ -472,7 +478,7 @@ public class OrgGatewayImpl implements OrgGatewayIface {
 			return AppUtil.createApiResponse(true, "Email Domain Updated Successfully",
 					updateEmailDomainDto.getEmailDomain());
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, "Something went wrong", null);
 		}
 	}
@@ -491,7 +497,7 @@ public class OrgGatewayImpl implements OrgGatewayIface {
 			return AppUtil.createApiResponse(true, "Email domain fetched successfully",
 					organizationEmailDomain.getEmailDomain());
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			return AppUtil.createApiResponse(false, "Something went wrong", null);
 		}
 	}
@@ -517,7 +523,7 @@ public class OrgGatewayImpl implements OrgGatewayIface {
 				sendNotification(subscriberView.getDisplayName(), subscriberView.getFcmToken(), true);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 		}
 	}
 
@@ -569,7 +575,7 @@ public class OrgGatewayImpl implements OrgGatewayIface {
 				System.out.println("NOTIFICATION SENT FAILED");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 		}
 	}
 }

@@ -4,10 +4,14 @@ package com.dtt.organization;
 import java.security.cert.X509Certificate;
 
 import javax.net.ssl.SSLContext;
+
+import com.dtt.organization.service.impl.OrgBucketImpl;
 import org.apache.hc.core5.ssl.TrustStrategy;
 //import org.jasypt.encryption.StringEncryptor;
 //import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 //import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -33,6 +37,8 @@ import org.apache.hc.client5.http.io.HttpClientConnectionManager;
 @OpenAPIDefinition(info = @Info(title = "My API", version = "1.0", description = "API documentation"))
 @SpringBootApplication
 public class OrganizationApplication {
+
+	Logger logger = LoggerFactory.getLogger(OrgBucketImpl.class);
 	public static void main(String[] args) {
 		SpringApplication.run(OrganizationApplication.class, args);
 
@@ -80,7 +86,7 @@ public class OrganizationApplication {
 //				System.out.println(new String(result.getResponse()));
 //			}
 //		} catch (PKICoreServiceException e) {
-//			e.printStackTrace();
+//			log.error("Unexpected exception", e);
 //		}
 //	}
 	@Bean
@@ -93,7 +99,7 @@ public class OrganizationApplication {
 				System.out.println(new String(result.getResponse()));
 			return result;
 		} catch (PKICoreServiceException e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 			throw new RuntimeException("Initialization failed", e);
 		}
 	}

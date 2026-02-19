@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -31,6 +33,8 @@ public class LinkedBeneficiraryWorkerThread implements Runnable {
 	public static SubscriberFcmTokenRepoIface subscriberFcmTokenRepoIface;
 	public static String sendNotificationURL;
 	public static String sponsorLinkedMessage;
+
+	Logger logger= LoggerFactory.getLogger(LinkedBeneficiraryWorkerThread.class);
 
 	public LinkedBeneficiraryWorkerThread(Benificiaries benificiariesDb, SubscriberRepository subscriberRepository,
 			BeneficiariesRepo beneficiariesRepo, SubscriberFcmTokenRepoIface subscriberFcmTokenRepoIface,
@@ -82,7 +86,7 @@ public class LinkedBeneficiraryWorkerThread implements Runnable {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 		}
 
 	}
@@ -118,7 +122,7 @@ public class LinkedBeneficiraryWorkerThread implements Runnable {
 				System.out.println("Notification failed");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Unexpected exception", e);
 		}
 	}
 

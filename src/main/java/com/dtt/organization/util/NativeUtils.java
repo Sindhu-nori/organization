@@ -161,7 +161,7 @@ public class NativeUtils {
 //			String image2 = new String(Base64.getEncoder().encode(buffer));
 //			return image2;
 //		} catch (Exception e) {
-//			e.printStackTrace();
+//			log.error("Unexpected exception", e);
 //			return e.getMessage();
 //		}
 //	}

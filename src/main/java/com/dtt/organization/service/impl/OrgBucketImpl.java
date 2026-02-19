@@ -18,6 +18,8 @@ import com.dtt.organization.util.AppUtil;
 import org.hibernate.PessimisticLockException;
 import org.hibernate.QueryTimeoutException;
 import org.hibernate.exception.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +39,7 @@ public class OrgBucketImpl implements OrgBucketsIface {
     OrgClientAppConfigRepo orgClientAppConfigRepo;
 
 
+    Logger logger = LoggerFactory.getLogger(OrgBucketImpl.class);
 
 
 
@@ -52,7 +55,7 @@ public class OrgBucketImpl implements OrgBucketsIface {
 
 
         }catch(Exception e){
-            e.printStackTrace();
+            logger.error("Unexpected exception", e);
             return AppUtil.createApiResponse(false,"Something went wrong",null);
 
         }
@@ -69,7 +72,7 @@ public class OrgBucketImpl implements OrgBucketsIface {
 
             }
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("Unexpected exception", e);
             return AppUtil.createApiResponse(false,"An Exception Occurred.Please Try After Sometime",null);
 
         }
@@ -86,7 +89,7 @@ public class OrgBucketImpl implements OrgBucketsIface {
 
             }
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("Unexpected exception", e);
             return AppUtil.createApiResponse(false,"An Exception Occurred.Please Try After Sometime",null);
 
         }
@@ -110,7 +113,7 @@ public class OrgBucketImpl implements OrgBucketsIface {
                     return AppUtil.createApiResponse(true,"Fetched successfully",res1);
                 }
             }catch (Exception e){
-            e.printStackTrace();
+                logger.error("Unexpected exception", e);
             return AppUtil.createApiResponse(false,"An Exception Occurred.Please Try After Sometime",null);
 
         }
@@ -244,7 +247,7 @@ public class OrgBucketImpl implements OrgBucketsIface {
 
 
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("Unexpected exception", e);
             return AppUtil.createApiResponse(false,"An Exception Occurred.Please Try After Sometime",null);
 
         }
@@ -264,7 +267,7 @@ public class OrgBucketImpl implements OrgBucketsIface {
                 return AppUtil.createApiResponse(true,"Fetched Successfully",orgBucketsHistory);
             }
         }catch(Exception e){
-            e.printStackTrace();
+            logger.error("Unexpected exception", e);
             return AppUtil.createApiResponse(false,"An Exception Occurred.Please Try After Sometime",null);
         }
     }
