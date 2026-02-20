@@ -1,6 +1,6 @@
 package com.dtt.organization.util;
 
-import java.net.URI;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +33,7 @@ public class LinkedBeneficiraryWorkerThread implements Runnable {
 	public static SubscriberFcmTokenRepoIface subscriberFcmTokenRepoIface;
 	public static String sendNotificationURL;
 	public static String sponsorLinkedMessage;
-
+public static UrlSecurityValidator urlSecurityValidator;
 	Logger logger= LoggerFactory.getLogger(LinkedBeneficiraryWorkerThread.class);
 
 	public LinkedBeneficiraryWorkerThread(Benificiaries benificiariesDb, SubscriberRepository subscriberRepository,
@@ -112,8 +112,7 @@ public class LinkedBeneficiraryWorkerThread implements Runnable {
 			dataDTO.setNotificationContext(contextDTO);
 			notificationBody.setData(dataDTO);
 			HttpEntity<Object> requestEntity = new HttpEntity<>(notificationBody, headers);
-			String url = "";
-			validateUrl(url);
+			urlSecurityValidator.validate(sendNotificationURL);
 			ResponseEntity<Object> res = restTemplate.exchange(sendNotificationURL, HttpMethod.POST, requestEntity,
 					Object.class);
 			if (res.getStatusCodeValue() == 200) {
@@ -126,26 +125,5 @@ public class LinkedBeneficiraryWorkerThread implements Runnable {
 		}
 	}
 
-	private void validateUrl(String url) {
-        try {
-            URI uri = new URI(url);
- 
-            // 1. Allow only http / https
-            if (uri.getScheme() == null ||
-                    (!"http".equalsIgnoreCase(uri.getScheme())
-&& !"https".equalsIgnoreCase(uri.getScheme()))) {
-                throw new IllegalArgumentException("Invalid URL scheme");
-            }
- 
-            // 2. Allow only configured hosts
-            String host = uri.getHost();
-            if (host == null || !allowedHosts.contains(host)) {
-                throw new IllegalArgumentException("Host not allowed");
-            }
- 
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Invalid or unsafe URL");
-        }
-    }
 
 }
